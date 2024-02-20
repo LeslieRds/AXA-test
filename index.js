@@ -1,10 +1,7 @@
 import express from "express";
 import nunjucks from "nunjucks";
 import path from "path";
-import apiErrorHandler from './app/middleware/apiErrorHandler';
-import routes from "./app/routes";
-import './style.scss';
-
+import stockRoutes from './app/routes';
 
 const app = express();
 
@@ -15,17 +12,11 @@ nunjucks.configure(path.join(__dirname, "./front"), {
   express: app
 });
 
-app.use(express.json());
-
-app.use(express.static('public'));
+app.use('/api', stockRoutes);
 
 app.use(
   express.static(path.join(__dirname, "/.public"), { maxAge: 31536000000 })
 );
-
-app.use(require("./app/routes")(app));
-
-app.use(apiErrorHandler);
 
 app.listen(1337, () => {
   console.log(`Server started ➜ http://localhost:1337`);

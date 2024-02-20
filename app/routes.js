@@ -1,18 +1,22 @@
 const express = require("express");
-const router = express.Router();
+const generateStockData = require('../api');
 
 module.exports = () => {
-  const router = new express.Router();
+  const app = new express.Router();
 
-  router.get("/", function(req, res) {
-    res.send("Hello World");
+  // Route pour obtenir les données des stocks
+  app.get('/', function(req, res) {
+    res.send('hello world');
   });
 
-  router.get('/example', (req, res) => {
-    res.json({ message: "Ceci est un exemple de route API." });
+  app.get("/stocks", function(req, res) {
+    const data = generateStockData();
+    res.json(data.stocks);
   });
 
-  module.exports = router;
+  app.post("/update", function(req, res) {
+    res.json({ message: "Données mises à jour avec succès" });
+  });
 
-  return router;
+  return app;
 };
