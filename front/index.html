@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Données des stocks</title>
+    <link rel="stylesheet" href="base/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>Données des stocks</h1>
+    <!-- Tableau modifiable -->
+      <table id="dataTable">
+          <thead>
+              <tr>
+                  <th>Timestamp</th>
+                  <th>Index</th>
+                  <th>Stocks</th>
+              </tr>
+          </thead>
+          <tbody contenteditable="true">
+              <tr>
+                  <td>Janvier</td>
+                  <td>10</td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td>Février</td>
+                  <td>20</td>
+                  <td></td>
+              </tr>
+              <!-- Ajoutez plus de données ici -->
+          </tbody>
+      </table>
+
+      <!-- Canevas pour le graphique -->
+      <canvas id="myChart" width="400" height="400"></canvas>
+
+      <script>
+          document.addEventListener('DOMContentLoaded', (event) => {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                // Le type de graphique
+                type: 'line',
+                // Les données pour notre dataset
+                data: {
+                    labels: ['Janvier', 'Février'], // Mettez à jour ces étiquettes en fonction des lignes du tableau
+                    datasets: [{
+                        label: 'Exemple de données',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [10, 20] // Mettez à jour ces valeurs en fonction des cellules du tableau
+                    }]
+                },
+                // Configuration des options
+                options: {}
+            });
+
+            // Fonction pour mettre à jour le graphique en fonction des modifications du tableau
+            function updateChart() {
+                const rows = document.querySelectorAll('#dataTable tbody tr');
+                chart.data.labels = [];
+                chart.data.datasets[0].data = [];
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    chart.data.labels.push(cells[0].innerText);
+                    chart.data.datasets[0].data.push(cells[1].innerText);
+                });
+
+                chart.update();
+            }
+
+            // Écouteur d'événements pour détecter les modifications du tableau
+            document.querySelector('#dataTable tbody').addEventListener('input', updateChart);
+        });
+      </script>
+  </body>
+</html>
