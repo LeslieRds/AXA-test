@@ -3,6 +3,8 @@ import nunjucks from "nunjucks";
 import path from "path";
 import apiErrorHandler from './app/middleware/apiErrorHandler';
 import routes from "./app/routes";
+import './style.scss';
+
 
 const app = express();
 

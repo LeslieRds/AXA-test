@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
-  entry: ["babel-polyfill", "./front/index.js", "./front/index.scss"],
+  entry: ["./front/index.js", "./front/index.scss"],
   output: {
     path: path.join(__dirname, ".public/base"),
     publicPath: "/",
@@ -24,16 +24,18 @@ module.exports = {
         },
       },
       {
-        test: /\.s[ac]ss$/,
+        test: /\.scss$/,
         use: [
+          "style-loader",
+          "scss-loader",
+          "sass-loader",
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
+            loader: "scss-loader",
             options: {
               importLoaders: 1,
             },
           },
-          "sass-loader",
         ],
       },
       {
@@ -47,7 +49,7 @@ module.exports = {
       template: './front/index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: "index.css",
+      filename: "index.scss",
     }),
   ],
   devServer: {
