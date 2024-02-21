@@ -6,28 +6,43 @@
     <title>Données des stocks</title>
     <link rel="stylesheet" href="base/index.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+  <script defer src="/index.js"></script></head>
   <body>
     <h1>Données des stocks</h1>
-    <!-- dataTable modifiable -->
+    <!-- Tableau modifiable -->
       <table id="dataTable">
           <thead>
               <tr>
-                  <th>Timestamp</th>
-                  <th>Index</th>
-                  <th>Stocks</th>
               </tr>
           </thead>
           <tbody contenteditable="true">
               <tr>
-                  <td>Janvier</td>
+                  <th>CAC40</th>
                   <td>10</td>
-                  <td></td>
+                  <td>15</td>
+                  <td>12</td>
+                  <td>27</td>
+                  <td>32</td>
+                  <td>33</td>
+                  <td>24</td>
+                  <td>37</td>
+                  <td>15</td>
+                  <td>02</td>
+
               </tr>
               <tr>
-                  <td>Février</td>
+                  <th>Nasdaq</th>
                   <td>20</td>
-                  <td></td>
+                  <td>27</td>
+                  <td>10</td>
+                  <td>15</td>
+                  <td>05</td>
+                  <td>03</td>
+                  <td>18</td>
+                  <td>26</td>
+                  <td>30</td>
+                  <td>21</td>
+
               </tr>
               <!-- Ajoutez plus de données ici -->
           </tbody>
@@ -37,22 +52,6 @@
       <canvas id="myChart" width="400" height="400"></canvas>
 
       <script>
-        // Récupérer les données JSON
-        const jsonData = [
-          { "colonne1": "Valeur 1", "colonne2": 10, "colonne3": 20 },
-          { "colonne1": "Valeur 2", "colonne2": 15, "colonne3": 25 },
-          { "colonne1": "Valeur 3", "colonne2": 20, "colonne3": 30 }
-        ];
-
-        // Générer le dataTable à partir du JSON
-        const dataTable = document.getElementById("dataTable");
-        const tbody = dataTable.getElementsByTagName("tbody")[0];
-        jsonData.forEach(data => {
-          const row = document.createElement("tr");
-          row.innerHTML = `<td>${data.colonne1}</td><td>${data.colonne2}</td><td>${data.colonne3}</td>`;
-          tbody.appendChild(row);
-        });
-
           document.addEventListener('DOMContentLoaded', (event) => {
             const ctx = document.getElementById('myChart').getContext('2d');
             const chart = new Chart(ctx, {
@@ -60,19 +59,25 @@
                 type: 'line',
                 // Les données pour notre dataset
                 data: {
-                    labels: ['Janvier', 'Février'], // Mettez à jour ces étiquettes en fonction des lignes du dataTable
+                    labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], // Mettez à jour ces étiquettes en fonction des lignes du tableau
                     datasets: [{
-                        label: 'Exemple de données',
+                        label: 'CAC40',
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: [10, 20] // Mettez à jour ces valeurs en fonction des cellules du dataTable
-                    }],
+                        data: [10, 15, 12, 27, 32, 33, 24, 37, 15, 2] // Mettez à jour ces valeurs en fonction des cellules du tableau
+                    },
+                    {
+                        label: 'Nasdaq',
+                        backgroundColor: 'rgb(89, 99, 132)',
+                        borderColor: 'rgb(89, 99, 132)',
+                        data: [20, 27, 10, 15, 5, 3, 18, 26, 30, 21] // Mettez à jour ces valeurs en fonction des cellules du tableau
+                    }]
                 },
                 // Configuration des options
                 options: {}
             });
 
-            // Fonction pour mettre à jour le graphique en fonction des modifications du dataTable
+            // Fonction pour mettre à jour le graphique en fonction des modifications du tableau
             function updateChart() {
                 const rows = document.querySelectorAll('#dataTable tbody tr');
                 chart.data.labels = [];
@@ -87,7 +92,7 @@
                 chart.update();
             }
 
-            // Écouteur d'événements pour détecter les modifications du dataTable
+            // Écouteur d'événements pour détecter les modifications du tableau
             document.querySelector('#dataTable tbody').addEventListener('input', updateChart);
         });
       </script>

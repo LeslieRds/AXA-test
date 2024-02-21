@@ -1,23 +1,16 @@
 h1 {
-  color: blue;
-
-  span {
-    color: red;
-  }
+  color: rgb(200, 0, 255);
 }
 
 table {
+  border: solid 2px black;
   border-collapse: collapse;
   width: 100%;
+  background-color: rgb(161, 83, 178);
 }
 
 th, td {
   border: 1px solid black;
   padding: 8px;
   text-align: left;
-}
-
-canvas {
-  max-width: 600px;
-  margin: 20px 0;
 }
